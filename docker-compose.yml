@@ -1,0 +1,11 @@
+services:
+  backend:
+    build:
+      context: ./backend
+    container_name: ai-pr-analyzer-backend
+    ports:
+      - "8000:8000"
+    env_file:
+      - ./backend/.env
+    volumes:
+      - ./backend/app:/app/app
