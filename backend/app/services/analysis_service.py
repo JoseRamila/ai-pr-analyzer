@@ -2,7 +2,7 @@ from fastapi import HTTPException, status
 
 from app.clients.github_client import github_client
 from app.clients.openai_client import openai_client
-from app.schemas.analysis import AnalysisRequest, AnalysisResponse
+from app.schemas.analysis import AnalysisRequest, AnalysisResponse, ChangedFile
 from app.services.fallback_analysis import build_fallback_analysis
 from app.services.github_url_parser import parse_github_pr_url
 from app.services.pr_file_processor import build_changed_files_summary
@@ -97,6 +97,22 @@ class AnalysisService:
             pr_number=pr_info.pr_number,
             pr_title=pull_request.get("title", ""),
             pr_author=pull_request.get("user", {}).get("login", ""),
+
+            files_changed=len(files),
+            additions=pull_request.get("additions", 0),
+            deletions=pull_request.get("deletions", 0),
+            commits=pull_request.get("commits", 0),
+
+            changed_files=[
+                ChangedFile(
+                    filename=file.get("filename", "unknown"),
+                    status=file.get("status", "modified"),
+                    additions=file.get("additions", 0),
+                    deletions=file.get("deletions", 0),
+                )
+                for file in files
+            ],
+
             summary=analysis_result["summary"],
             main_changes=[
                 f"{len(files)} files changed",

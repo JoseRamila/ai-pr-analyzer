@@ -1,0 +1,45 @@
+html {
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+/* Always force dark mode */
+:root {
+  color-scheme: dark;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #1e1e30;
+  border-radius: 999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #2a2a42;
+}
+
+/* Smooth focus transitions */
+* {
+  transition-property: border-color, box-shadow, background-color, opacity;
+  transition-duration: 120ms;
+  transition-timing-function: ease;
+}
+
+/* Override to prevent transition on layout properties */
+.animate-spin {
+  transition: none;
+}
+.animate-pulse {
+  transition: none;
+}

@@ -13,6 +13,12 @@ class AnalysisRequest(BaseModel):
 
     pr_url: HttpUrl
 
+class ChangedFile(BaseModel):
+    filename: str
+    status: str
+    additions: int
+    deletions: int
+
 
 class AnalysisResponse(BaseModel):
     """
@@ -30,6 +36,10 @@ class AnalysisResponse(BaseModel):
 
     pr_title: str
     pr_author: str
+    files_changed: int
+    additions: int
+    deletions: int
+    commits: int
 
     summary: str
 
@@ -41,3 +51,6 @@ class AnalysisResponse(BaseModel):
     review_checklist: List[str]
 
     impact_level: str
+    changed_files: list[ChangedFile]
+
+
