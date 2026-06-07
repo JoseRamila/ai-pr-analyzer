@@ -4,36 +4,34 @@ from sqlalchemy.orm import sessionmaker
 
 from app.core.settings import settings
 
+database_url = settings.database_url
 
-# Creates the SQLAlchemy engine using the DATABASE_URL.
+if database_url.startswith("postgresql://"):
+    database_url = database_url.replace(
+        "postgresql://",
+        "postgresql+psycopg://",
+        1,
+    )
+
 engine = create_engine(
-    settings.database_url,
+    database_url,
     echo=True,
 )
 
-
-# Creates database sessions.
 SessionLocal = sessionmaker(
     autocommit=False,
     autoflush=False,
     bind=engine,
 )
 
-
-# Base class for all database models.
 Base = declarative_base()
 
 
 def get_db():
-    """
-    Dependency used to get a database session.
-
-    Automatically closes the session after the request finishes.
-    """
-
     db = SessionLocal()
 
     try:
         yield db
+
     finally:
         db.close()
