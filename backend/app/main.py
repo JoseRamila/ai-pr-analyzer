@@ -2,8 +2,12 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 
 from app.core.settings import settings
+from app.db.session import Base
+from app.db.session import engine
+from app.models import Analysis
 from app.routes.analyses import router as analyses_router
 from app.routes.health import router as health_router
+
 
 # Creates the FastAPI application instance.
 # This is the central entry point of the backend.
@@ -11,6 +15,9 @@ app = FastAPI(
     title=settings.app_name,
     version=settings.app_version,
 )
+
+# Creates all database tables.
+Base.metadata.create_all(bind=engine)
 
 # Allows the React frontend to communicate with the FastAPI backend
 # during local development.

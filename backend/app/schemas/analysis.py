@@ -18,6 +18,7 @@ class ChangedFile(BaseModel):
     status: str
     additions: int
     deletions: int
+    patch: str = ""
 
 
 class AnalysisResponse(BaseModel):

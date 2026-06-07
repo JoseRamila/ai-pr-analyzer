@@ -1,88 +1,189 @@
 # AI PR Analyzer
 
-AI-powered GitHub Pull Request analyzer built with FastAPI, Docker, GitHub API and OpenAI.
+AI-powered GitHub Pull Request analyzer built with FastAPI, React, Docker, GitHub API, and OpenAI.
 
 ---
 
-## Overview
+# Overview
 
 AI PR Analyzer allows users to submit a public GitHub Pull Request URL and receive a structured technical analysis.
 
-The backend fetches Pull Request metadata, changed files and patch previews from the GitHub API, builds an AI-ready prompt and generates a structured review response.
+The application fetches Pull Request metadata and changed files directly from the GitHub API, generates an AI-ready prompt, and returns a developer-focused review including:
 
-If OpenAI quota is unavailable, the application automatically falls back to a local analysis strategy.
+* Pull Request summary
+* Changed files
+* Risk analysis
+* Suggested tests
+* Review checklist
+* Impact level
 
----
-
-## Features
-
-- GitHub Pull Request URL validation
-- GitHub API integration
-- Pull Request metadata extraction
-- Patch preview processing
-- AI-ready prompt generation
-- OpenAI integration
-- Local fallback analysis
-- FastAPI Swagger documentation
-- Docker support
-- Automated tests with Pytest
+If OpenAI quota is unavailable, the backend automatically falls back to a local analysis engine.
 
 ---
 
-## Tech Stack
+# Features
 
-- Python 3.12
-- FastAPI
-- Pydantic
-- HTTPX
-- OpenAI SDK
-- Docker
-- Pytest
-- Ruff
-- Black
+## Backend
+
+* FastAPI backend
+* GitHub API integration
+* OpenAI integration
+* Local fallback analysis
+* Structured API responses
+* Pull Request URL validation
+* Changed files processing
+* Docker support
+* Automated tests with Pytest
+
+## Frontend
+
+* React + Vite frontend
+* Modern dashboard UI
+* Real-time PR analysis
+* Loading and error states
+* Structured visualization of:
+
+  * files changed
+  * additions/deletions
+  * commits
+  * risks
+  * suggested tests
+  * review checklist
 
 ---
 
-## Architecture
+# Tech Stack
+
+## Frontend
+
+* React
+* TypeScript
+* Vite
+* TailwindCSS
+* Lucide Icons
+
+## Backend
+
+* Python 3.12
+* FastAPI
+* Pydantic
+* HTTPX
+* OpenAI SDK
+
+## Tooling
+
+* Docker
+* GitHub API
+* Pytest
+* Ruff
+* Black
+
+---
+
+# Architecture
 
 ```text
-Client
-  ↓
-FastAPI Routes
-  ↓
-Analysis Service
-  ↓
-GitHub Client + OpenAI Client
-  ↓
-External APIs
+Frontend (React + Vite)
+        ↓
+FastAPI Backend
+        ↓
+GitHub API
+        ↓
+OpenAI API / Local Fallback
 ```
 
 ---
 
-## Project Structure
+# Project Structure
 
 ```text
 ai-pr-analyzer/
+│
 ├── backend/
 │   ├── app/
 │   │   ├── clients/
 │   │   ├── core/
 │   │   ├── routes/
 │   │   ├── schemas/
-│   │   └── services/
+│   │   ├── services/
+│   │   ├── db/
+│   │   ├── models/
+│   │   └── repositories/
+│   │
 │   ├── tests/
 │   ├── Dockerfile
-│   ├── requirements.txt
-│   └── .env
+│   └── requirements.txt
+│
+├── frontend/
+│   ├── src/
+│   ├── package.json
+│   ├── vite.config.ts
+│   └── index.html
+│
 ├── docker-compose.yml
 └── README.md
 ```
 
 ---
 
-## Environment Variables
+# Run Backend Locally
 
-Create a `.env` file inside `backend/`.
+```bash
+cd backend
+
+python -m venv .venv
+
+# Windows
+.venv\Scripts\Activate.ps1
+
+pip install -r requirements.txt
+
+uvicorn app.main:app --reload
+```
+
+Backend runs on:
+
+```text
+http://127.0.0.1:8000
+```
+
+Swagger docs:
+
+```text
+http://127.0.0.1:8000/docs
+```
+
+---
+
+# Run Frontend Locally
+
+```bash
+cd frontend
+
+npm install
+
+npm run dev
+```
+
+Frontend runs on:
+
+```text
+http://localhost:5173
+```
+
+---
+
+# Run with Docker
+
+```bash
+docker compose up --build
+```
+
+---
+
+# Environment Variables
+
+Create a `.env` file inside `backend/`:
 
 ```env
 OPENAI_API_KEY=
@@ -92,65 +193,15 @@ DATABASE_URL=
 
 ---
 
-## Run Locally
+# API Endpoint
 
-```bash
-cd backend
+## Analyze Pull Request
 
-python -m venv .venv
-
-.venv\Scripts\Activate.ps1
-
-pip install -r requirements.txt
-
-uvicorn app.main:app --reload
+```http
+POST /analyses
 ```
 
-Open:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
----
-
-## Run with Docker
-
-From the project root:
-
-```bash
-docker compose up --build
-```
-
-Open:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
----
-
-## Run Tests
-
-From `backend/`:
-
-```bash
-pytest
-```
-
----
-
-## API Documentation
-
-Swagger UI:
-
-```text
-http://127.0.0.1:8000/docs
-```
-
----
-
-## Example Request
+Request body:
 
 ```json
 {
@@ -160,46 +211,38 @@ http://127.0.0.1:8000/docs
 
 ---
 
-## Example Workflow
+# Current Status
 
-```text
-GitHub PR URL
-↓
-FastAPI Endpoint
-↓
-GitHub API Integration
-↓
-Patch & Metadata Extraction
-↓
-Prompt Builder
-↓
-OpenAI Analysis
-↓
-Structured Technical Response
-```
+## Implemented
 
----
+* FastAPI backend
+* React frontend
+* GitHub integration
+* OpenAI integration
+* Local fallback analysis
+* Docker support
+* Structured PR analysis
+* Real changed files visualization
+* Automated tests
 
-## Current Status
+## Planned
 
-Implemented:
-- GitHub PR parsing
-- GitHub API integration
-- OpenAI client integration
-- Prompt engineering pipeline
-- Local fallback analysis
-- Docker support
-- Automated tests
-- Swagger documentation
-
-Planned:
-- Frontend UI
-- Database persistence
-- CI/CD pipeline
-- Cloud deployment
+* PostgreSQL persistence
+* Analysis history
+* Authentication
+* CI/CD pipeline
+* Syntax-highlighted patches
+* Advanced AI risk analysis
 
 ---
 
-## Author
+# Future Deployment
 
-Built by Jose Ramila.
+## Frontend
+
+Vercel
+
+## Backend
+
+Render
+

@@ -216,3 +216,18 @@ __marimo__/
 
 # Streamlit
 .streamlit/secrets.toml
+
+# Frontend
+node_modules/
+frontend/node_modules/
+
+# Vite
+frontend/dist/
+dist/
+
+# Environment files
+frontend/.env
+backend/.env
+
+# MacOS
+.DS_Store
