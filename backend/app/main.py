@@ -26,8 +26,10 @@ app.add_middleware(
     allow_origins=[
         "http://localhost:5173",
         "http://127.0.0.1:5173",
-        "https://ai-pr-analyzer-26xbnd1-joseramilas-projects.vercel.app",
         "https://ai-pr-analyzer-git-main-joseramilas-projects.vercel.app",
+        "https://ai-pr-analyzer.vercel.app",
+        
+
 
     ],
     allow_credentials=True,
